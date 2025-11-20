@@ -24,7 +24,7 @@ function tiny_announcer() constructor {
     alert = function(_string, _type) {
         
         //If the type is not correct send a stringed alert to the broadcasting system and exit the function.
-        if !array_contains(type, _type) { alert($"{_type} is invalid type!", "warn"); exit; }
+        if !array_contains(type, _type) { alert($"{_type} is invalid type!", 1); exit; }
         
         if !ds_exists(prompt, ds_type_list) { prompt = ds_list_create(); }
         
