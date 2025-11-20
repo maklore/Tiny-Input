@@ -4,11 +4,11 @@ function tiny_announcer() constructor {
     static maximum = 5;
     static size    = 0;
     static prompt  = -1;
-    static time    = 3;
+    static time    = 5;										//Seconds
     static alpha   = 1;
     static time_pf = 1 / game_get_speed(gamespeed_fps);  
-    static color   = [c_green, c_yellow, c_red];    //news, warning, error
-    static type    = [0, 1, 2];                     //news, warning, error
+    static color   = [c_green, c_yellow, c_red];			//news, warning, error
+    static type    = [0, 1, 2];								//news, warning, error
     static val     = {
         text  : 0,
         type  : 1,
@@ -31,8 +31,8 @@ function tiny_announcer() constructor {
         //Insert into the first entry: string, type, timer to the broadcasting prompter.
         ds_list_insert(prompt, 0, variable_clone([_string, _type, time, alpha]));
 		
-		//Get the size of the DS list.
-        size = ds_list_size(prompt);
+		//Get the size of the DS list with a max of maximum size.
+        size = clamp(ds_list_size(prompt), 0, maximum);
         
         //If the size is greater (should not happen) or equal to the maximum size, delete the last entry.
         if size >= maximum { ds_list_delete(prompt, size); }
