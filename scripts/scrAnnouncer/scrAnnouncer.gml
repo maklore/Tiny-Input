@@ -52,7 +52,7 @@ function tiny_announcer() constructor {
         size = clamp(ds_list_size(prompt), 0, maximum);
         
         //If the size is greater (should not happen) or equal to the maximum size, delete the last entry.
-        if size >= maximum { ds_list_delete(prompt, size - 1); }
+        if size >= maximum { ds_list_delete(prompt, size); }
         
     }
    
