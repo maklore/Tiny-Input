@@ -1,8 +1,8 @@
 {
   "$GMProject":"v1",
-  "%Name":"Tiny_GML",
+  "%Name":"Tiny GML",
   "AudioGroups":[
-    {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
+    {"$GMAudioGroup":"v1","%Name":"audiogroup_default","exportDir":"","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
   ],
   "configs":{
     "children":[],
@@ -10,19 +10,19 @@
   },
   "defaultScriptType":1,
   "Folders":[
-    {"$GMFolder":"","%Name":"Scripts","folderPath":"folders/Scripts.yy","name":"Scripts","order":-7,"resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Scripts","folderPath":"folders/Scripts.yy","name":"Scripts","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[],
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.13.1.193",
+    "IDEVersion":"2024.14.1.210",
   },
-  "name":"Tiny_GML",
+  "name":"Tiny GML",
   "resources":[
     {"id":{"name":"scrAnnouncer","path":"scripts/scrAnnouncer/scrAnnouncer.yy",},},
-    {"id":{"name":"scrInput","path":"scripts/scrInput/scrInput.yy",},"order":1,},
+    {"id":{"name":"scrInput","path":"scripts/scrInput/scrInput.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
