@@ -1,4 +1,6 @@
 {
   "FolderOrderSettings":[],
-  "ResourceOrderSettings":[],
+  "ResourceOrderSettings":[
+    {"name":"scrMovement","order":2,"path":"scripts/scrMovement/scrMovement.yy",},
+  ],
 }

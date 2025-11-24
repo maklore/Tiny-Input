@@ -23,6 +23,7 @@
   "resources":[
     {"id":{"name":"scrAnnouncer","path":"scripts/scrAnnouncer/scrAnnouncer.yy",},},
     {"id":{"name":"scrInput","path":"scripts/scrInput/scrInput.yy",},},
+    {"id":{"name":"scrMovement","path":"scripts/scrMovement/scrMovement.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
