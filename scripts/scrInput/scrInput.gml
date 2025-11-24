@@ -119,8 +119,8 @@ function tiny_input() constructor {
 	 */
 	free = function(_key) {
 		var _check_use = false
-		for (var i = 0; i < names_length; ++i) {
-			if array_contains(key[$ names[i]], _key) {
+		for (var i = 0; i < key_names_length; ++i) {
+			if array_contains(key[$ key_names[i]], _key) {
 				_check_use = true;
 				break
 			}

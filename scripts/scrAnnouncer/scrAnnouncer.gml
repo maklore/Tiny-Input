@@ -15,7 +15,7 @@ function tiny_announcer() constructor {
 	});
     static maximum = 5;
     static size    = 0;
-    static length  = 40;									//Maximum character length before new line.
+    static length  = 74;									//Maximum character length before new line.
     static scale   = 1;										//Scale of the drawn string.
     static prompt  = -1;
     static time    = 4;										//Seconds
