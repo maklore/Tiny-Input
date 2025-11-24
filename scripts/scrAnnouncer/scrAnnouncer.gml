@@ -1,11 +1,29 @@
 function tiny_announcer() constructor {
     
     //Initialize the values.
-	static font	   = font_add("Arial", 32, false, false, 32, 128);
-	font_enable_sdf(font, true);
-	font_enable_effects(font, true, {
+	static data = {
+		font	: font_add("Arial", 32, false, false, 32, 128),
+	    maximum : 5,
+	    size    : 0,
+	    length  : 74,												//Maximum character length before new line.
+	    scale   : 1,												//Scale of the drawn string.
+	    prompt  : -1,
+	    time    : 4,												//Seconds
+	    alpha   : 1,
+	    time_pf : 1 / game_get_speed(gamespeed_fps),				//Time between frames
+	    color   : [ #64c864, #c89600, #c83232],						//Green, Amber,  Red
+	    type    : [0, 1, 2],										//news, warning, error
+	    val     : {
+	        text  : 0,
+	        type  : 1,
+	        time  : 2,
+	        alpha : 3
+	    }
+	}
+	font_enable_sdf(data.font, true);
+	font_enable_effects(data.font, true, {
 		dropShadowEnable: true,
-	    dropShadowSoftness: 20,
+	    dropShadowSoftness: 10,
 	    dropShadowOffsetX: 4,
 	    dropShadowOffsetY: 4,
 		dropShadowAlpha: 1,
@@ -13,56 +31,40 @@ function tiny_announcer() constructor {
 		outlineDistance: 2,
 		outlineColour: c_black
 	});
-    static maximum = 5;
-    static size    = 0;
-    static length  = 74;									//Maximum character length before new line.
-    static scale   = 1;										//Scale of the drawn string.
-    static prompt  = -1;
-    static time    = 4;										//Seconds
-    static alpha   = 1;
-    static time_pf = 1 / game_get_speed(gamespeed_fps);		//Time between frames
-    static color   = [ #64c864, #c89600, #c83232]			//Green, Amber,  Red
-    static type    = [0, 1, 2];								//news, warning, error
-    static val     = {
-        text  : 0,
-        type  : 1,
-        time  : 2,
-        alpha : 3
-    }
 
     /**
-     * @desc With this function you can send a string or format alert to the broadcasting system. The types and colored text of systems are as follows: 0 (News - Green), 1 (Warning - Amber), and 2 (Error - Red).
+     * @desc With this function you can send a stringed or a format alert to the broadcasting system. The types and colored text of systems are as follows: 0 (News - Green), 1 (Warning - Amber), and 2 (Error - Red).
      * @param {string} _string  The string message you wish to add broadcasting system.
      * @param {string} _type    The type of message you wish to broadcast.
      */
     alert = function(_string_or_format, _type) {
-
+		
         //If the type is not correct send a stringed alert to the broadcasting system and exit the function.
-        if (_string_or_format == "") or !array_contains(type, _type) { alert($"String is empty or type is invalid!", 1); exit; }
+        if (_string_or_format == "") or !array_contains(data.type, _type) { alert($"String is empty or type is invalid!", 1); exit; }
         
-        if !ds_exists(prompt, ds_type_list) { prompt = ds_list_create(); }
+        if !ds_exists(data.prompt, ds_type_list) { data.prompt = ds_list_create(); }
         
         //Insert array into the first entry of the list: string (wrapped), type, timer to the broadcasting prompter.
-		var _new_string = string_upper(_string_or_format);
+		var _new_string = string(_string_or_format);//string_upper(_string_or_format);
         var _string_length = string_length(_new_string);
         
-	    if typeof(_string_or_format) == "string" and _string_length > length {
-		    var _pos = length;
-		    var _split_amount = round(_string_length / length);
+	    if typeof(_string_or_format) == "string" and _string_length > data.length {
+		    var _pos = data.length;
+		    var _split_amount = round(_string_length / data.length);
 		    for (var i = 0; i < _split_amount; ++i) {
 		        _pos = string_last_pos_ext(" ", _new_string, _pos);
 		        _new_string = string_insert("\n", _new_string, _pos);
-		        _pos += length;
+		        _pos += data.length;
 		    }
 	    }
 
-        ds_list_insert(prompt, 0, variable_clone([_new_string, _type, time, alpha]));
+        ds_list_insert(data.prompt, 0, variable_clone([_new_string, _type, data.time, data.alpha]));
 		
 		//Get the size of the DS list with a max of maximum size.
-        size = clamp(ds_list_size(prompt), 0, maximum);
+        data.size = clamp(ds_list_size(data.prompt), 0, data.maximum);
         
         //If the size is greater (should not happen) or equal to the maximum size, delete the last entry.
-        if size >= maximum { ds_list_delete(prompt, size); }
+        if data.size >= data.maximum { ds_list_delete(data.prompt, data.size); }
         
     }
    
@@ -76,53 +78,53 @@ function tiny_announcer() constructor {
         static gui_y = display_get_gui_height() * 0.1;  //Upper part of the GUI height.
         
         //If there is no DS list exit the function.
-        if !ds_exists(prompt, ds_type_list) { exit; }
+        if !ds_exists(data.prompt, ds_type_list) { exit; }
         
         //If the font is not broadcasting font, set it. **WIP**
-        if draw_get_font() != font { draw_set_font(font); }
+        if draw_get_font() != data.font { draw_set_font(data.font); }
 		
-		//Set the text alignment if it isn't centered.
+		//Set the text alignment if it isn't centered top.
         if draw_get_halign() != fa_center { draw_set_halign(fa_center); };
         if draw_get_valign() != fa_top { draw_set_valign(fa_top); };
 		
         var _string_y = 0;
-		
-        for (var i = 0; i < size; ++i) {
+
+        for (var i = 0; i < data.size; ++i) {
 			
 			//If there is an undefined entry exit the loop.
-			if prompt[| i] == undefined { exit }
+			if data.prompt[| i] == undefined { exit }
 			
             //Adds the first entries string height to the current entry if there are more than one entry.
-            _string_y = i > 0 ? _string_y + string_height(prompt[| 0][val.text]) * scale : 0;
+            _string_y = i > 0 ? _string_y + string_height(data.prompt[| 0][data.val.text]) * data.scale : 0;
 			
             draw_text_transformed_color(gui_x, 
                                         gui_y + _string_y, 
-                                        prompt[| i][val.text],
-                                        scale,
-                                        scale,
+                                        data.prompt[| i][data.val.text],
+                                        data.scale,
+                                        data.scale,
                                         0,
-                                        color[prompt[| i][val.type]],
-                                        color[prompt[| i][val.type]],
-                                        color[prompt[| i][val.type]],
-                                        color[prompt[| i][val.type]],
-                                        prompt[| i][val.alpha]);
+                                        data.color[data.prompt[| i][data.val.type]],
+                                        data.color[data.prompt[| i][data.val.type]],
+                                        data.color[data.prompt[| i][data.val.type]],
+                                        data.color[data.prompt[| i][data.val.type]],
+                                        data.prompt[| i][data.val.alpha]);
 										
         }
 		
 		//Reduce timer by time per frame.
-        prompt[| size - 1][val.time] -= time_pf;
+        data.prompt[| data.size - 1][data.val.time] -= data.time_pf;
             
         //Reduce alpha to zero during the last second.
-        if prompt[| size - 1][val.time] <= 1 { prompt[| size - 1][val.alpha] -= time_pf; }
+        if data.prompt[| data.size - 1][data.val.time] <= 1 { data.prompt[| data.size - 1][data.val.alpha] -= data.time_pf; }
             
         //Delete the entry that has had it's timer reached zero.
-        if prompt[| size - 1][val.time] <= 0 { 
-			ds_list_delete(prompt, size - 1); 
-			size = clamp(ds_list_size(prompt), 0, maximum) 
+        if data.prompt[| data.size - 1][data.val.time] <= 0 { 
+			ds_list_delete(data.prompt, data.size - 1); 
+			data.size = clamp(ds_list_size(data.prompt), 0, data.maximum) 
 		}
         
         //If the list is empty, destroy it, and reset values.
-        if ds_list_empty(prompt) { ds_list_destroy(prompt); prompt = -1; size = 0; }
+        if ds_list_empty(data.prompt) { ds_list_destroy(data.prompt); data.prompt = -1; data.size = 0; }
     }
 }
 
