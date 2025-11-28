@@ -114,13 +114,13 @@ function tiny_cast() constructor {
 										
         }
 		
-		//Reduce timer by time per frame.
+		//Reduce the last entry's timer by set 'time' per frame.
         data.prompt[| data.size - 1][data.val.time] -= data.time_pf;
             
         //Reduce alpha to zero during the last second.
         if data.prompt[| data.size - 1][data.val.time] <= 1 { data.prompt[| data.size - 1][data.val.alpha] -= data.time_pf; }
             
-        //Delete the entry that has had it's timer reached zero.
+        //Delete the entry once it's timer reaches zero.
         if data.prompt[| data.size - 1][data.val.time] <= 0 { 
 			ds_list_delete(data.prompt, data.size - 1); 
 			data.size = clamp(ds_list_size(data.prompt), 0, data.maximum) 
