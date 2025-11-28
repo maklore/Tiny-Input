@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scrInput",
+  "%Name":"scrSteer",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scrInput",
+  "name":"scrSteer",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

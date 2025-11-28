@@ -1,7 +1,7 @@
 /**
- * @desc With this function you can move in both x and y axis with keyboard or while using a gamepad, and stop when colliding with an instance.
- * @param {real} _horizontal_input                                The keyboard checks for horizontal movement.
- * @param {real} _vertical_input                                  The keyboard checks for vertical movement.
+ * @desc With this function you can move in both x and y axis by passing input and stop when colliding with an instance.
+ * @param {real} _horizontal_input                                The input checks for horizontal movement.
+ * @param {real} _vertical_input                                  The input checks for vertical movement.
  * @param {Asset.GMObject, Constant.All, Array} _collision_object The object(s) to check instances for.
  * @param {real} [_speed_max]=Maximum speed (Default: 6).
  * @param {real} [_speed_acc]=Acceleration speed (Default: 0.26).

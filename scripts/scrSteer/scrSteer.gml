@@ -1,4 +1,7 @@
-function tiny_input() constructor {
+/**
+ * @desc This function is a constructor for an input system.
+ */
+function tiny_steer() constructor {
 	//Credit for key_press etc idea: germ3x
 	/*
 	
@@ -122,7 +125,7 @@ function tiny_input() constructor {
 		for (var i = 0; i < key_names_length; ++i) {
 			if array_contains(key[$ key_names[i]], _key) {
 				_check_use = true;
-				break
+				break;
 			}
 		}
 		if _check_use return false
@@ -196,5 +199,5 @@ function tiny_input() constructor {
 }
 
 //INITIALIZE THE INPUT CONSTRUCTOR
-#macro INPUT global.input
-INPUT = new tiny_input();
+#macro STEER global.steer
+STEER = new tiny_steer();

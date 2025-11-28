@@ -1,4 +1,7 @@
-function tiny_announcer() constructor {
+/**
+ * @desc This function is a constructor for a broadcasting system.
+ */
+function tiny_cast() constructor {
     
     //Initialize the values.
 	static data = {
@@ -129,5 +132,5 @@ function tiny_announcer() constructor {
 }
 
 //INITIALIZE THE BROADCASTING SYSTEM
-#macro MSG global.msg
-MSG = new tiny_announcer();
+#macro CAST global.casts
+CAST = new tiny_cast();
