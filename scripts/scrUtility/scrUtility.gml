@@ -18,7 +18,7 @@ function tiny_wrap(_string, _length) {
 }
 
 /**
- * @desc This function saves most of the built in variables, and each* instance variables of all but the excluded objects to a json file named after the room when called. *Not methods.
+ * @desc This function saves the "most useful" built in variables, and each* instance variables of all but the excluded objects to a json file named after the room when called. *Not methods.
  * @param {array} _exclude_array The array containing the object index to exclude. Default is empty.
  */
 function tiny_save(_exclude_array = []) {
@@ -63,7 +63,7 @@ function tiny_save(_exclude_array = []) {
 }
 
 /**
- * @desc This function loads each saved variable from a json file named after a room, and destroys each instance and remakes then while inserting the saved data.
+ * @desc This function loads each saved variable from a json file named after a room, and destroys each instance and remakes them while inserting the saved data.
  * @param {array} _exclude_array The array containing the object index to exclude. Default is empty.
  */
 function tiny_load(_exclude_array = []) {
